@@ -43,7 +43,7 @@ router.post('/add', (req, res, next)=>{
    });
 });
 
-//GET: for Delete
+//GET: /Delete
 router.get('/delete/:_id', (req, res, next) =>{
    let _id= req.params._id;
 
@@ -57,7 +57,7 @@ router.get('/delete/:_id', (req, res, next) =>{
    });
 });
 
-//GET:  for edit
+//GET:  /cars/edit
 router.get('/edit/:_id', (req, res, next)=>{
     let _id= req.params._id;
     Car.findById(_id, (err, car)=>{

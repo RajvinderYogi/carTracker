@@ -12,6 +12,7 @@ const config = require('./config/globals');
 var index = require('./controllers/index');
 var users = require('./controllers/users');
 const cars = require('./controllers/cars');
+const makes = require('./controllers/makes');
 var app = express();
 
 // view engine setup
@@ -31,6 +32,8 @@ app.use('/users', users);
 
 //map all requests with cars to cars controller
 app.use('/cars', cars);
+
+app.use('/makes', makes);
 
 //db connection
 mongoose.connect(config.db);
