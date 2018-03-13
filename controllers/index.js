@@ -24,3 +24,16 @@ router.get('/contact',(req, res, next) => {
     });
 });
 module.exports = router;
+
+//GET: /register
+router.get('/register', (req, res, next)=>{
+    res.render('register', {
+        title:'Register'
+    });
+});
+//GET: /login
+router.get('/login', (req, res, next)=>{
+    res.render('login', {
+        title:'Login'
+    });
+});

@@ -8,12 +8,16 @@ var bodyParser = require('body-parser');
 // refrence for mongodb
 const mongoose = require('mongoose');
 const config = require('./config/globals');
+const passport = require('passport');
+const session = require('express-session');
+const localStrategy=require('passport-local').Strategy;
 
 var index = require('./controllers/index');
-var users = require('./controllers/users');
 const cars = require('./controllers/cars');
 const makes = require('./controllers/makes');
 var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +32,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 
 //map all requests with cars to cars controller
 app.use('/cars', cars);
@@ -37,6 +40,20 @@ app.use('/makes', makes);
 
 //db connection
 mongoose.connect(config.db);
+
+app.use(session({
+    secret: 'any string here',
+    resave: true,
+    saveUninitialized: false
+}));
+const User = require('./models/user');
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser);
+passport.deserializeUser(User.deserializeUser);
+
+app.use(passport.initialize());
+app.use(passport.session());
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
